@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sqlitedb.file"
-app.config["SQL_TRACK_MODIFICATION"] = 0
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = 0
 
 
 # configure sqlite3 to enforce foreign key constraints
@@ -37,10 +37,67 @@ class User(db.Model):
     posts = db.relationship("BlogPost")
 
 
+class BlogPost(db.Model):
+    __tablename__ = "blog_post"
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50))
+    body = db.Column(db.String(200))
+    date = db.Column(db.Date)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+
+## Routes
+
+
+@app.route("/user", methods=["POST"])
+def create_user():
+    pass
+
+
+@app.route("/user/descending_id", methods=["GET"])
+def get_all_users_desgending():
+    pass
+
+
+@app.route("/user/ascending_id", methods=["GET"])
+def get_all_users_ascending():
+    pass
+
+
+@app.route("/user/<user_id>", methods=["GET"])
+def get_one_user(user_id):
+    pass
+
+
+@app.route("/user/<user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    pass
+
+
+@app.route("/blog_post/<user_id>", methods=["POST"])
+def create_blog_post(user_id):
+    pass
+
+
+@app.route("/blog_post/<blog_post_id>", methods=["GET"])
+def all_blog_post(blog_post_id):
+    pass
+
+
+@app.route("/blog_post/<blog_post_id>", methods=["GET"])
+def get_one_blog_post(blog_post_id):
+    pass
+
+
+@app.route("/blog_post/<blog_post_id>", methods=["DELETE"])
+def delete_blog_post(blog_post_id):
+    pass
+
+
 @app.route('/')
 def hello_world():
     return 'Hello World!'
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
