@@ -9,25 +9,49 @@ class LinkedList:
         self.head = None
         self.last_node = None
 
+    def to_list(self):
+        l = []
+        if self.head is None:
+            return l
 
-def print_ll(self):
-    ll_string = ""
-    node = self.head
-    if node is None:
-        print("Empty")
-    while node:
-        ll_string += f" {str(node.data)} ->"
-        node = node.next_node
+        node = self.head
+        while node:
+            l.append(node.data)
+            node = node.next_node
+        return l
 
-    ll_string += "None"
-    print(ll_string)
+    def print_ll(self):
+        ll_string = ""
+        node = self.head
+        if node is None:
+            print(None)
+        while node:
+            ll_string += f" {str(node.data)} ->"
+            node = node.next_node
 
+        ll_string += " None"
+        print(ll_string)
 
-ll = LinkedList()
-node4 = Node("data", None)
-node3 = Node("data", node4)
-node2 = Node("data", node3)
-node1 = Node("data", node2)
+    def insert_beginning(self, data):
+        if self.head is None:
+            self.head = Node(data, None)
+            self.last_node = self.head
 
-ll.head = node1
-ll.print_ll()
+        new_node = Node(data, self.head)
+        self.head = new_node
+
+    def insert_at_end(self, data):
+        if self.head is None:
+            self.insert_beginning(data)
+            return
+
+        self.last_node.next_node = Node(data, None)
+        self.last_node = self.last_node.next_node
+
+    def get_user_by_id(self, user_id):
+        node = self.head
+        while node:
+            if node.data["id"] is int(user_id):
+                return node.data
+            node = node.next_node
+        return None
